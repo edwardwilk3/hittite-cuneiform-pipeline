@@ -8,11 +8,14 @@ def normalize_brackets(text: str) -> str:
     if not text:
         return ""
 
-    # Remove square restoration brackets [ ]
-    cleaned = re.sub(r"[\[\]]", "", text)
+    # Replaces HTML non-breaking spaces with regular spaces.
+    cleaned = text.replace("&nbsp;", " ")
 
     # Remove uncertainty marks (?, !)
     cleaned = re.sub(r"[\?!]", "", cleaned)
+
+    # Standardizes gloss wedge variations into a single colon.
+    cleaned = re.sub(r"(::|'|//)", ":", cleaned)
 
     # Normalize multiple empty spaces down to a single space.
     cleaned = re.sub(r"\s+", " ", cleaned)
